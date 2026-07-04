@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>H2n Clothing — Designed Better for Boys | From Heart to Needle</title>
     <meta name="description" content="H2n Clothing — Premium boys wear crafted from heart to needle. Explore the Latest Launch: Heritage Festive Shirt Set & Coastal Ombre Shirt.">
-    <link rel="icon" href="images/pdf-logo.png">
+    <link rel="icon" href="images/pdf-logo-icon.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Poppins:wght@300;400;500;600;700&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
@@ -187,7 +187,7 @@
             z-index: 3;
         }
         .center-logo img { width: 100%; filter: drop-shadow(0 10px 24px rgba(0,0,0,0.55)); animation: bob 5s ease-in-out 1.6s infinite; }
-        @keyframes logoPop { to { opacity: 1; transform: translateY(8%) scale(1); } }
+        @keyframes logoPop { to { opacity: 1; transform: translateY(30%) scale(1); } }
         @keyframes bob { 0%,100% { transform: translateY(0) rotate(0deg); } 50% { transform: translateY(-7px) rotate(-1.5deg); } }
 
         .hamburger { display: none; }
@@ -319,6 +319,173 @@
         .price { font-family: var(--font-display); font-weight: 700; font-size: 1.3rem; color: var(--white); }
         .price .r { font-size: 0.95rem; opacity: 0.85; margin-right: 2px; }
 
+        .grid-status { grid-column: 1 / -1; text-align: center; color: var(--muted); padding: 30px 0; }
+        .card { cursor: pointer; }
+        .card-media { pointer-events: none; }
+
+        /* Out-of-stock card */
+        .oos-badge {
+            position: absolute; top: 12px; left: 12px; z-index: 2;
+            background: rgba(10,20,45,0.82); color: #fff; font-size: 0.66rem; font-weight: 700;
+            letter-spacing: 1.5px; text-transform: uppercase; padding: 6px 12px; border-radius: 30px;
+            border: 1px solid rgba(255,255,255,0.25); backdrop-filter: blur(4px);
+        }
+        .card.is-oos .card-media img { filter: grayscale(0.85) brightness(0.7); }
+        .card.is-oos .price { opacity: 0.7; }
+
+        /* Size chips (modal) */
+        .modal-sizes { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+        .size-chip {
+            padding: 8px 14px; border-radius: 12px; cursor: pointer;
+            background: rgba(255,255,255,0.08); color: #dbe8fb; border: 1.5px solid transparent;
+            font-size: 0.8rem; font-weight: 600; font-family: var(--font-body); transition: all .2s;
+        }
+        .size-chip:hover { background: rgba(255,255,255,0.16); }
+        .size-chip.active { background: #fff; color: #0a2247; border-color: var(--green-bright); }
+        .size-chip.oos { opacity: 0.4; cursor: not-allowed; text-decoration: line-through; background: rgba(255,255,255,0.04); }
+        .size-chip.oos:hover { background: rgba(255,255,255,0.04); }
+
+        /* Buy Now button */
+        .modal-cta { display: inline-flex; align-items: center; gap: 8px; }
+        .modal-cta svg { flex-shrink: 0; }
+        .modal-cta.is-oos {
+            background: rgba(255,255,255,0.12); color: var(--muted); cursor: not-allowed;
+            box-shadow: none; transform: none;
+        }
+        .modal-cta.is-oos svg { display: none; }
+
+        /* ===================== QUICK-VIEW MODAL ===================== */
+        .modal { position: fixed; inset: 0; z-index: 200; display: none; align-items: center; justify-content: center; padding: 20px; }
+        .modal.open { display: flex; }
+        .modal-backdrop { position: absolute; inset: 0; background: rgba(3, 12, 30, 0.72); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); animation: fadeIn .3s var(--ease); }
+        .modal-card {
+            position: relative; z-index: 1;
+            display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
+            width: min(920px, 100%); max-height: 90vh; overflow: hidden;
+            border-radius: 26px;
+            background: linear-gradient(180deg, #0c1f42, #0a1a38);
+            border: 1px solid rgba(120,170,220,0.18);
+            box-shadow: 0 40px 100px -30px rgba(0,0,0,0.8);
+            animation: popIn .4s var(--ease);
+        }
+        @keyframes fadeIn { from { opacity: 0; } }
+        @keyframes popIn { from { opacity: 0; transform: translateY(24px) scale(0.97); } }
+
+        .modal-close {
+            position: absolute; top: 12px; right: 12px; z-index: 4;
+            width: 38px; height: 38px; border-radius: 50%; border: none; cursor: pointer;
+            display: grid; place-items: center; color: #fff;
+            background: rgba(10,25,55,0.55); backdrop-filter: blur(6px);
+            transition: background .2s, transform .2s;
+        }
+        .modal-close:hover { background: rgba(255,84,112,0.85); transform: rotate(90deg); }
+
+        /* Gallery / slider */
+        .modal-gallery { position: relative; min-width: 0; background: radial-gradient(120% 100% at 50% 25%, #1069c6 0%, #0b52a2 65%, #093f80 100%); }
+        .slider { position: relative; width: 100%; height: 100%; min-height: 340px; overflow: hidden; }
+        .slides { display: flex; height: 100%; transition: transform .45s var(--ease); }
+        .slides .slide { position: relative; min-width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; }
+        .slides .slide img { width: 100%; height: 100%; object-fit: contain; padding: 22px; }
+        .slide-nav {
+            position: absolute; top: 50%; transform: translateY(-50%); z-index: 3;
+            width: 40px; height: 40px; border-radius: 50%; border: none; cursor: pointer;
+            display: grid; place-items: center; color: #0a2247;
+            background: rgba(255,255,255,0.85); box-shadow: 0 6px 18px rgba(0,0,0,0.3);
+            transition: background .2s, transform .2s;
+        }
+        .slide-nav:hover { background: #fff; }
+        .slide-nav.prev { left: 12px; } .slide-nav.next { right: 12px; }
+        .slide-nav:active { transform: translateY(-50%) scale(0.92); }
+        .slide-dots { position: absolute; bottom: 14px; left: 0; right: 0; z-index: 3; display: flex; gap: 8px; justify-content: center; }
+        .slide-dots button {
+            width: 9px; height: 9px; padding: 0; border: none; border-radius: 50%; cursor: pointer;
+            background: rgba(255,255,255,0.45); transition: background .2s, transform .2s;
+        }
+        .slide-dots button.active { background: #fff; transform: scale(1.25); }
+
+        /* Info panel */
+        .modal-info { padding: 34px 30px 28px; min-width: 0; overflow-y: auto; display: flex; flex-direction: column; }
+        .modal-type { font-size: 0.66rem; font-weight: 600; letter-spacing: 2.6px; text-transform: uppercase; color: var(--brand-bright); }
+        .modal-title { font-family: var(--font-display); font-weight: 700; font-size: 1.85rem; line-height: 1.06; margin-top: 6px; color: #fff; }
+        .modal-tagline { color: #d7e6fb; font-weight: 500; margin-top: 6px; }
+        .modal-desc { color: rgba(215,230,251,0.82); font-size: 0.86rem; line-height: 1.62; margin-top: 14px; }
+        .modal-swatches-label { margin-top: 20px; font-size: 0.72rem; letter-spacing: 1px; text-transform: uppercase; color: var(--muted-dim); }
+        .modal-swatches-label span { color: #fff; text-transform: none; letter-spacing: 0; font-weight: 600; margin-left: 4px; }
+        .modal-colors { display: flex; gap: 12px; margin-top: 10px; }
+        .swatch {
+            width: 30px; height: 30px; border-radius: 50%; padding: 0; cursor: pointer;
+            background: var(--sw); border: 2px solid transparent; box-shadow: 0 0 0 1.5px rgba(255,255,255,0.4);
+            transition: transform .2s, box-shadow .2s;
+        }
+        .swatch:hover { transform: scale(1.12); }
+        .swatch.active { box-shadow: 0 0 0 2px var(--navy-800), 0 0 0 4px var(--green-bright); transform: scale(1.1); }
+        .modal-foot { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-top: auto; padding-top: 24px; }
+        .modal-price { font-family: var(--font-display); font-weight: 700; font-size: 1.7rem; color: #fff; }
+        .modal-cta {
+            border: none; cursor: pointer; color: #06264a; font-weight: 700; font-family: var(--font-body);
+            padding: 13px 26px; border-radius: 40px; font-size: 0.92rem;
+            background: linear-gradient(96deg, var(--brand-bright), var(--green-bright));
+            box-shadow: 0 12px 26px -10px rgba(34,163,230,0.6); transition: transform .2s, box-shadow .2s;
+        }
+        .modal-cta:hover { transform: translateY(-2px); box-shadow: 0 16px 30px -10px rgba(95,202,119,0.6); }
+
+        @media (max-width: 720px) {
+            .modal { padding: 14px; }
+            .modal-card { grid-template-columns: minmax(0, 1fr); max-height: 90vh; overflow-y: auto; }
+            /* cap the image area so the popup isn't dominated by a giant photo */
+            .modal-gallery { height: 38vh; max-height: 320px; }
+            .slider { height: 100%; min-height: 0; }
+            .slides .slide img { padding: 14px; }
+            .modal-info { padding: 20px 18px 22px; }
+            .modal-title { font-size: 1.4rem; }
+            .modal-desc { font-size: 0.82rem; }
+        }
+
+        /* ===================== ABOUT US ===================== */
+        .about { max-width: var(--maxw); margin: 0 auto; padding: 80px 20px 30px; scroll-margin-top: 100px; }
+        .about-inner { display: grid; grid-template-columns: 1.35fr 1fr; gap: 50px; align-items: start; }
+        .js-reveal { opacity: 0; transform: translateY(34px); transition: opacity .8s var(--ease), transform .8s var(--ease); }
+        .js-reveal.in { opacity: 1; transform: none; }
+        .about-title { font-family: var(--font-display); font-weight: 800; font-size: clamp(2.1rem, 5vw, 3.3rem); line-height: 1.03; letter-spacing: -0.5px; margin: 8px 0 22px; color: #fff; }
+        .about-story p { color: var(--muted); font-size: 1.02rem; line-height: 1.78; margin-bottom: 15px; }
+        .about-story strong { color: #fff; font-weight: 600; }
+        .about-story em { color: var(--brand-bright); font-style: italic; }
+        .about-motto { margin-top: 20px; font-family: var(--font-display); font-weight: 700; font-size: 1.25rem; color: #fff !important; }
+        .about-motto span {
+            background: linear-gradient(96deg, var(--brand-bright), var(--green-bright));
+            -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; color: transparent;
+        }
+
+        .contact-card {
+            position: relative; overflow: hidden;
+            background: linear-gradient(180deg, var(--card-hi) 0%, var(--card) 66%, #093f80 100%);
+            border: 1px solid rgba(120,170,220,0.18); border-radius: 24px; padding: 30px 28px;
+            box-shadow: 0 30px 60px -30px rgba(0,0,0,0.7), inset 0 1px 0 rgba(255,255,255,0.08);
+        }
+        .contact-title { font-family: var(--font-display); font-weight: 700; font-size: 1.6rem; color: #fff; }
+        .contact-lead { color: #d7e6fb; margin-top: 4px; }
+        .contact-brand { color: #fff; font-weight: 600; margin: 16px 0 14px; }
+        .contact-brand span { color: var(--muted); font-weight: 400; }
+        .contact-list { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+        .contact-list li { display: flex; gap: 10px; align-items: flex-start; color: #e6eefb; font-size: 0.92rem; line-height: 1.5; }
+        .contact-list .ci { flex-shrink: 0; }
+        .contact-list a { color: #fff; border-bottom: 1px solid rgba(255,255,255,0.32); transition: color .2s, border-color .2s; }
+        .contact-list a:hover { color: var(--green-bright); border-color: var(--green-bright); }
+        .contact-hours { margin-top: 20px; padding: 14px 16px; background: rgba(255,255,255,0.07); border-radius: 14px; }
+        .hours-label { display: block; font-size: 0.66rem; letter-spacing: 2.4px; text-transform: uppercase; color: var(--green-bright); font-weight: 600; }
+        .hours-value { display: block; font-family: var(--font-display); font-weight: 700; font-size: 1.2rem; color: #fff; margin-top: 3px; }
+        .hours-note { color: var(--muted); font-size: 0.84rem; }
+        .contact-cta { display: flex; gap: 12px; margin-top: 22px; }
+        .contact-cta a { flex: 1; text-align: center; padding: 12px 14px; border-radius: 40px; font-weight: 600; font-size: 0.9rem; transition: transform .2s, box-shadow .2s; }
+        .contact-cta a:hover { transform: translateY(-2px); }
+        .btn-call { background: rgba(255,255,255,0.12); color: #fff; border: 1px solid rgba(255,255,255,0.2); }
+        .btn-wa { background: linear-gradient(96deg, #25d366, #128c4a); color: #fff; box-shadow: 0 12px 24px -10px rgba(37,211,102,0.55); }
+
+        @media (max-width: 820px) {
+            .about-inner { grid-template-columns: 1fr; gap: 34px; }
+            .about { padding-top: 60px; }
+        }
+
         /* Heart / wishlist */
         .heart {
             border: none; background: transparent; cursor: pointer;
@@ -332,8 +499,8 @@
 
         /* ===================== FOOTER ===================== */
         .footer { max-width: var(--maxw); margin: 40px auto 0; padding: 40px 20px 50px; text-align: center; }
-        .footer-thread { margin: 0 auto 22px; width: 180px; opacity: 0.5; }
-        .footer-brand { display: inline-flex; align-items: center; gap: 10px; margin-bottom: 12px; }
+        .footer-thread { display: block; margin: 0 auto 22px; width: 180px; opacity: 0.5; }
+        .footer-brand { display: flex; justify-content: center; align-items: center; gap: 10px; margin-bottom: 12px; }
         .footer-brand img:first-child { width: 38px; height: auto; }
         .footer-wordmark { height: 30px; width: auto; }
         .footer-brand .script { font-family: var(--font-script); font-size: 1.5rem; }
@@ -380,7 +547,7 @@
                 animation-delay: 0s !important;
                 transition-duration: 0.001ms !important;
             }
-            .navbar, .center-logo, .hero-boys-wrap, .card { opacity: 1 !important; transform: none !important; }
+            .navbar, .center-logo, .hero-boys-wrap, .card { opacity: 1 !important; }
             .hero-title .line > span { transform: none !important; }
             .thread img { clip-path: none !important; }
         }
@@ -404,7 +571,7 @@
                 <a class="nav-link" href="#collections">NEW ARRIVALS</a>
                 <!-- <a class="nav-link is-disabled" aria-disabled="true" title="Coming soon">COLLECTIONS</a> -->
                 <span class="nav-logo-slot" aria-hidden="true"></span>
-                <a class="nav-link is-disabled" aria-disabled="true" title="Coming soon">ABOUT US</a>
+                <a class="nav-link" href="#about">ABOUT US</a>
                 <!-- <a class="nav-link is-disabled" aria-disabled="true" title="Coming soon">CONTACT</a> -->
             </div>
 
@@ -419,14 +586,14 @@
 
             <!-- Floating centre logo -->
             <div class="center-logo" aria-hidden="true">
-                <img src="images/pdf-logo.png" alt="">
+                <img src="images/pdf-logo-icon.png" alt="">
             </div>
         </div>
     </nav>
 
     <div class="mobile-menu" id="mobileMenu">
         <a href="#collections" class="mm-active">NEW ARRIVALS</a>
-        <a aria-disabled="true">ABOUT US</a>
+        <a href="#about" class="mm-active">ABOUT US</a>
     </div>
 
     <!-- ===================== HERO ===================== -->
@@ -448,66 +615,108 @@
             <p class="col-sub">Handpicked pieces your boys will love. Super fabrics and styles that stand out!</p>
         </div>
 
-        <section class="card-grid" aria-label="Latest launch products">
-
-            <!-- Card 1 -->
-            <article class="card reveal">
-                <div class="card-media">
-                    <img src="images/pdf-heritage-festive-set.jpg" alt="Heritage Festive Shirt Set — navy shirt with white veshti" loading="lazy">
-                </div>
-                <div class="card-body">
-                    <span class="card-cat">SETS</span>
-                    <div class="card-titlerow">
-                        <div>
-                            <h3 class="card-title">Heritage Festive Shirt Set</h3>
-                            <p class="card-tag">Tradition Woven with Style.</p>
-                        </div>
-                        <button class="heart" aria-label="Add Heritage Festive Shirt Set to wishlist" aria-pressed="false">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg>
-                        </button>
-                    </div>
-                    <p class="card-desc">Festive shirt featuring elegant traditional gold shimmer print detailing, paired with a classic white veshti. Designed for comfort and style, making it the perfect outfit for festivals, weddings, birthdays, and special occasions.</p>
-                    <div class="card-foot">
-                        <div class="dots">
-                            <span class="dot" style="--dot:#f4efe6" title="White"></span>
-                            <span class="dot" style="--dot:#8a8f5a" title="Olive"></span>
-                            <span class="dot" style="--dot:#c0392b" title="Red"></span>
-                        </div>
-                        <span class="price"><span class="r">₹</span>799</span>
-                    </div>
-                </div>
-            </article>
-
-            <!-- Card 2 -->
-            <article class="card reveal">
-                <div class="card-media">
-                    <img src="images/pdf-coastal-ombre-shirt.png" alt="Coastal Ombre Shirt — blue, white and green ombre" loading="lazy">
-                </div>
-                <div class="card-body">
-                    <span class="card-cat">TOP</span>
-                    <div class="card-titlerow">
-                        <div>
-                            <h3 class="card-title">Coastal Ombre Shirt</h3>
-                            <p class="card-tag">Colors Inspired by Nature. Made for Every Adventure.</p>
-                        </div>
-                        <button class="heart" aria-label="Add Coastal Ombre Shirt to wishlist" aria-pressed="false">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg>
-                        </button>
-                    </div>
-                    <p class="card-desc">A refreshing ombre shirt featuring vibrant shades of blue, white, and green inspired by ocean waves and summer skies. Crafted for comfort and style, this lightweight shirt is perfect for vacations, outings, birthdays and everyday adventures.</p>
-                    <div class="card-foot">
-                        <div class="dots">
-                            <span class="dot" style="--dot:#e9e2cf" title="Sand"></span>
-                            <span class="dot" style="--dot:#d9b38c" title="Tan"></span>
-                            <span class="dot" style="--dot:#cdbf8f" title="Khaki"></span>
-                        </div>
-                        <span class="price"><span class="r">₹</span>599</span>
-                    </div>
-                </div>
-            </article>
-
+        <!-- Cards are rendered from new-arrivals.json (see script at end of file) -->
+        <section class="card-grid" id="cardGrid" aria-label="Latest launch products" aria-live="polite">
+            <p class="grid-status" id="gridStatus">Loading the latest launch…</p>
         </section>
     </main>
+
+    <!-- ===================== ABOUT US ===================== -->
+    <section class="about" id="about">
+        <div class="about-inner">
+            <div class="about-story js-reveal">
+                <p class="eyebrow">Our Story</p>
+                <h2 class="about-title">About H2N Clothing</h2>
+                <p>At H2N Clothing, we believe every child deserves clothing that combines comfort, quality, and timeless style.</p>
+                <p>Our first brand, <strong>H2N Junior</strong>, is dedicated to premium boyswear for children aged 1–6 years. Every design is thoughtfully created with attention to detail, carefully selected fabrics, and superior craftsmanship to ensure your little gentleman looks and feels his best.</p>
+                <p>Inspired by our philosophy, <em>“Heart to Needle,”</em> every garment is designed with passion and crafted with precision—from the first sketch to the final stitch.</p>
+                <p>Based in <strong>Tiruppur, Tamil Nadu</strong>, India's knitwear capital, we are committed to creating premium-quality clothing at honest prices.</p>
+                <p class="about-motto">Thoughtfully Designed. Beautifully Crafted. <span>Heart to Needle.</span></p>
+            </div>
+
+            <aside class="contact-card js-reveal" id="contact">
+                <h3 class="contact-title">Contact Us</h3>
+                <p class="contact-lead">We'd love to hear from you.</p>
+                <p class="contact-brand">H2N Clothing <span>· Brand: H2N Junior</span></p>
+                <ul class="contact-list">
+                    <li><span class="ci">📍</span><span>Palladam, Tiruppur, Tamil Nadu, India</span></li>
+                    <li><span class="ci">📞</span><span>Phone / WhatsApp: <a href="tel:+917010680219">+91 70106 80219</a></span></li>
+                    <li><span class="ci">📧</span><span>Email: <a href="mailto:clothing.h2n@gmail.com">clothing.h2n@gmail.com</a></span></li>
+                    <li><span class="ci">🌐</span><span>Website: <a href="https://www.h2n.in" target="_blank" rel="noopener">www.h2n.in</a></span></li>
+                </ul>
+                <div class="contact-hours">
+                    <span class="hours-label">Business Hours</span>
+                    <span class="hours-value">9:00 AM – 9:00 PM</span>
+                    <span class="hours-note">Open 7 days a week</span>
+                </div>
+                <div class="contact-cta">
+                    <a class="btn-call" href="tel:+917010680219">Call Us</a>
+                    <a class="btn-wa" href="https://wa.me/917010680219" target="_blank" rel="noopener">WhatsApp</a>
+                </div>
+            </aside>
+        </div>
+    </section>
+
+    <!-- ===================== QUICK-VIEW MODAL ===================== -->
+    <div class="modal" id="modal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="mTitle">
+        <div class="modal-backdrop" data-close></div>
+        <div class="modal-card">
+            <button class="modal-close" data-close aria-label="Close">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg>
+            </button>
+            <div class="modal-gallery">
+                <div class="slider">
+                    <div class="slides" id="mSlides"></div>
+                </div>
+                <button class="slide-nav prev" id="mPrev" aria-label="Previous image">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+                </button>
+                <button class="slide-nav next" id="mNext" aria-label="Next image">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+                </button>
+                <div class="slide-dots" id="mDots"></div>
+            </div>
+            <div class="modal-info">
+                <span class="modal-type" id="mType"></span>
+                <h3 class="modal-title" id="mTitle"></h3>
+                <p class="modal-tagline" id="mTagline"></p>
+                <p class="modal-desc" id="mDesc"></p>
+                <div class="modal-swatches-label">Colour <span id="mColorName"></span></div>
+                <div class="modal-colors" id="mColors"></div>
+                <div class="modal-swatches-label">Size <span id="mSizeName"></span></div>
+                <div class="modal-sizes" id="mSizes"></div>
+                <div class="modal-foot">
+                    <span class="modal-price" id="mPrice"></span>
+                    <button class="modal-cta" id="mBuy" type="button">
+                        <svg width="19" height="19" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.71.306 1.263.489 1.694.625.712.227 1.36.195 1.872.118.57-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.946L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.414z"/></svg>
+                        <span class="buy-label">Buy Now</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- file:// fallback: used only when new-arrivals.json can't be fetched (double-click open).
+         When served over http(s), the external new-arrivals.json is fetched live and this is ignored. -->
+    <script type="application/json" id="na-fallback">
+    {"collection":"New Arrivals","currencySymbol":"₹","whatsapp":"917010680219","items":[
+      {"id":"na-001","name":"Heritage Festive Shirt Set","type":"Sets","tagline":"Tradition Woven with Style.","description":"Festive shirt featuring elegant traditional gold shimmer print detailing, paired with a classic white veshti. Designed for comfort and style, making it the perfect outfit for festivals, weddings, birthdays, and special occasions.","amount":799,"outOfStock":false,"disabled":true,"sizes":["1-2 Y","2-3 Y","3-4 Y","4-5 Y","5-6 Y"],"defaultColor":"olive","colors":[
+        {"id":"olive","name":"Olive Green","hex":"#8a8f5a","outOfStockSizes":["5-6 Y"],"images":["images/products/heritage-festive-shirt-set/olive/olive-1.jpg","images/products/heritage-festive-shirt-set/olive/olive-2.jpg","images/products/heritage-festive-shirt-set/olive/olive-3.jpg"]},
+        {"id":"royal","name":"Royal Blue","hex":"#122560","outOfStockSizes":["1-2 Y","2-3 Y"],"images":["images/products/heritage-festive-shirt-set/royal/royal-1.jpg","images/products/heritage-festive-shirt-set/royal/royal-2.jpg","images/products/heritage-festive-shirt-set/royal/royal-3.jpg"]}
+      ]},
+      {"id":"na-002","name":"Coastal Ombre Shirt","type":"Top","tagline":"Colors Inspired by Nature. Made for Every Adventure.","description":"A refreshing ombre shirt featuring vibrant shades of blue, white, and green inspired by ocean waves and summer skies. Crafted for comfort and style, this lightweight shirt is perfect for vacations, outings, birthdays and everyday adventures.","amount":599,"outOfStock":false,"sizes":["1-2 Y","2-3 Y","3-4 Y","4-5 Y","5-6 Y"],"defaultColor":"ocean-blue","colors":[
+        {"id":"ocean-blue","name":"Ocean Blue","hex":"#2f6db0","outOfStockSizes":["4-5 Y"],"images":["images/products/na-002-coastal-ombre-shirt/ocean-blue-1.png","images/products/na-002-coastal-ombre-shirt/ocean-blue-2.png","images/products/na-002-coastal-ombre-shirt/ocean-blue-3.png"]},
+        {"id":"aqua-mist","name":"Aqua Mist","hex":"#7fb5d8","images":["images/products/na-002-coastal-ombre-shirt/aqua-mist-1.png","images/products/na-002-coastal-ombre-shirt/aqua-mist-2.png","images/products/na-002-coastal-ombre-shirt/aqua-mist-3.png"]},
+        {"id":"forest-green","name":"Forest Green","hex":"#2e8b57","images":["images/products/na-002-coastal-ombre-shirt/forest-green-1.png","images/products/na-002-coastal-ombre-shirt/forest-green-2.png","images/products/na-002-coastal-ombre-shirt/forest-green-3.png"]}
+      ]},
+      {"id":"na-003","name":"Adventure Cargo Set","type":"Sets","tagline":"Built for Every Little Explorer.","description":"Rugged cargo set with a soft cotton tee and utility-pocket shorts. Made for playtime, comfy all day, and tough enough for every backyard adventure.","amount":899,"outOfStock":true,"disabled":true,"sizes":["1-2 Y","2-3 Y","3-4 Y","4-5 Y","5-6 Y"],"defaultColor":"slate","colors":[
+        {"id":"slate","name":"Slate Blue","hex":"#2f6db0","images":["images/products/na-003-adventure-cargo-set/slate-1.png","images/products/na-003-adventure-cargo-set/slate-2.png","images/products/na-003-adventure-cargo-set/slate-3.png"]}
+      ]},
+      {"id":"na-004","name":"Sunny Day Tee","type":"Top","tagline":"Bright Days, Soft Cottons.","description":"A breezy everyday tee in super-soft breathable cotton. Perfect for sunny outings, school days, and everything in between.","amount":499,"outOfStock":true,"sizes":["1-2 Y","2-3 Y","3-4 Y","4-5 Y","5-6 Y"],"defaultColor":"sunny","colors":[
+        {"id":"sunny","name":"Sunny Olive","hex":"#8a8f5a","images":["images/products/na-004-sunny-day-tee/sunny-1.jpg","images/products/na-004-sunny-day-tee/sunny-2.jpg","images/products/na-004-sunny-day-tee/sunny-3.jpg"]}
+      ]}
+    ]}
+    </script>
 
     <!-- ===================== FOOTER ===================== -->
     <footer class="footer">
@@ -519,7 +728,7 @@
             <img class="footer-wordmark" src="images/pdf-wordmark.png" alt="H2n Junior">
         </div>
         <p class="footer-tag">From Heart to Needle</p>
-        <p class="footer-copy">© 2026 H2n Clothing. Designed Better for Boys.</p>
+        <p class="footer-copy">H2N Junior · Powered by H2N Clothing</p>
     </footer>
 
     <script>
@@ -538,25 +747,6 @@
                 html += `<span class="star ${s}" style="left:${x}%;top:${y}%;animation-delay:${delay}s;animation-duration:${dur}s"></span>`;
             }
             wrap.innerHTML = html;
-        })();
-
-        /* Scroll-reveal for product cards */
-        (function () {
-            const cards = document.querySelectorAll('.card.reveal');
-            if (!('IntersectionObserver' in window)) {
-                cards.forEach(c => c.classList.add('in'));
-                return;
-            }
-            const io = new IntersectionObserver((entries) => {
-                entries.forEach((e, i) => {
-                    if (e.isIntersecting) {
-                        const el = e.target;
-                        setTimeout(() => el.classList.add('in'), Array.from(cards).indexOf(el) * 140);
-                        io.unobserve(el);
-                    }
-                });
-            }, { threshold: 0.2 });
-            cards.forEach(c => io.observe(c));
         })();
 
         /* Animated (eased) smooth-scroll for in-page anchors, e.g. New Arrivals */
@@ -588,18 +778,254 @@
                     const y = el.getBoundingClientRect().top + window.pageYOffset - NAV_OFFSET;
                     if (reduce) { window.scrollTo(0, y); }
                     else { scrollToY(y, 1000); }
-                    history.replaceState(null, '', id);
+                    try { history.replaceState(null, '', id); } catch (_) { /* file:// origin */ }
                 });
             });
         })();
 
-        /* Wishlist heart toggle */
-        document.querySelectorAll('.heart').forEach(btn => {
-            btn.addEventListener('click', () => {
-                const on = btn.classList.toggle('active');
-                btn.setAttribute('aria-pressed', on ? 'true' : 'false');
+        /* ===== New Arrivals: load JSON → render cards → quick-view modal with image slider ===== */
+        (function () {
+            const grid = document.getElementById('cardGrid');
+            const statusEl = document.getElementById('gridStatus');
+            const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+            let CFG = null, SYM = '₹';
+
+            const esc = s => String(s == null ? '' : s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+            const fmt = n => Number(n).toLocaleString('en-IN');
+            const colorOf = (item, id) => item.colors.find(c => c.id === id) || item.colors[0];
+            const heroImg = item => { const c = colorOf(item, item.defaultColor); return (c.images && c.images[0]) || item.thumbnail; };
+
+            async function load() {
+                try {
+                    const res = await fetch('new-arrivals.json', { cache: 'no-store' });
+                    if (!res.ok) throw 0;
+                    return await res.json();
+                } catch (e) {
+                    const fb = document.getElementById('na-fallback');   // file:// fallback
+                    if (fb) { try { return JSON.parse(fb.textContent); } catch (_) { } }
+                    return null;
+                }
+            }
+
+            function cardHTML(item, idx) {
+                const dots = item.colors.map(c => `<span class="dot" style="--dot:${esc(c.hex)}" title="${esc(c.name)}"></span>`).join('');
+                const oos = !!item.outOfStock;
+                return `
+                <article class="card reveal${oos ? ' is-oos' : ''}" data-idx="${idx}" tabindex="0" role="button" aria-label="View ${esc(item.name)}${oos ? ' (out of stock)' : ''}">
+                    <div class="card-media">
+                        <img src="${esc(heroImg(item))}" alt="${esc(item.name)}" loading="lazy">
+                        ${oos ? '<span class="oos-badge">Out of Stock</span>' : ''}
+                    </div>
+                    <div class="card-body">
+                        <span class="card-cat">${esc(item.type)}</span>
+                        <div class="card-titlerow">
+                            <div>
+                                <h3 class="card-title">${esc(item.name)}</h3>
+                                <p class="card-tag">${esc(item.tagline)}</p>
+                            </div>
+                            <button class="heart" data-heart aria-label="Add ${esc(item.name)} to wishlist" aria-pressed="false">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg>
+                            </button>
+                        </div>
+                        <p class="card-desc">${esc(item.description)}</p>
+                        <div class="card-foot">
+                            <div class="dots">${dots}</div>
+                            <span class="price"><span class="r">${esc(SYM)}</span>${fmt(item.amount)}</span>
+                        </div>
+                    </div>
+                </article>`;
+            }
+
+            function renderCards() {
+                // `disabled: true` products are hidden from the UI entirely.
+                // Keep each card's data-idx pointing at its original CFG.items position so the modal opens the right item.
+                const visible = CFG.items.filter(it => !it.disabled);
+                if (!visible.length) {
+                    grid.innerHTML = '<p class="grid-status">No products to show right now — please check back soon.</p>';
+                    return;
+                }
+                grid.innerHTML = visible.map(it => cardHTML(it, CFG.items.indexOf(it))).join('');
+                const cards = [...grid.querySelectorAll('.card.reveal')];
+                if (reduce || !('IntersectionObserver' in window)) { cards.forEach(c => c.classList.add('in')); return; }
+                const io = new IntersectionObserver(entries => {
+                    entries.forEach(e => {
+                        if (e.isIntersecting) { const el = e.target; setTimeout(() => el.classList.add('in'), cards.indexOf(el) * 130); io.unobserve(el); }
+                    });
+                }, { threshold: 0.15 });
+                cards.forEach(c => io.observe(c));
+            }
+
+            /* ---- Modal + slider ---- */
+            const modal = document.getElementById('modal');
+            const mSlides = document.getElementById('mSlides');
+            const mDots = document.getElementById('mDots');
+            const els = {
+                type: document.getElementById('mType'), title: document.getElementById('mTitle'),
+                tagline: document.getElementById('mTagline'), desc: document.getElementById('mDesc'),
+                price: document.getElementById('mPrice'), colors: document.getElementById('mColors'),
+                colorName: document.getElementById('mColorName'),
+                sizes: document.getElementById('mSizes'), sizeName: document.getElementById('mSizeName'),
+                buy: document.getElementById('mBuy')
+            };
+            let cur = { item: null, i: 0, imgs: [], color: null, colorName: '', size: '' }, lastFocus = null, modalPushed = false;
+
+            function setSlide(i, animate = true) {
+                const n = cur.imgs.length; if (!n) return;
+                cur.i = (i % n + n) % n;
+                if (!animate) mSlides.style.transition = 'none';
+                mSlides.style.transform = `translateX(${-cur.i * 100}%)`;
+                if (!animate) { void mSlides.offsetWidth; mSlides.style.transition = ''; }
+                [...mDots.children].forEach((d, k) => d.classList.toggle('active', k === cur.i));
+            }
+
+            /* Stock has two levels: product-level (global) OR a size+colour combination */
+            const isGlobalOOS = it => !!(it && it.outOfStock);
+            const sizeOOS = (col, size) => !!(col && col.outOfStockSizes && col.outOfStockSizes.indexOf(size) !== -1);
+            const firstAvailableSize = (it, col) => isGlobalOOS(it) ? '' : (it.sizes || []).find(s => !sizeOOS(col, s)) || '';
+
+            function updateBuy() {
+                const oos = isGlobalOOS(cur.item) || !cur.size || sizeOOS(cur.color, cur.size);
+                els.buy.disabled = oos;
+                els.buy.classList.toggle('is-oos', oos);
+                els.buy.querySelector('.buy-label').textContent = oos ? 'Out of Stock' : 'Buy Now';
+            }
+
+            function renderSizes() {
+                const it = cur.item;
+                els.sizes.innerHTML = (it.sizes || []).map(s => {
+                    const oos = isGlobalOOS(it) || sizeOOS(cur.color, s);
+                    return `<button class="size-chip${oos ? ' oos' : ''}" type="button" data-size="${esc(s)}"${oos ? ' aria-disabled="true"' : ''}>${esc(s)}</button>`;
+                }).join('');
+            }
+
+            function selectSize(size) {
+                cur.size = size || '';
+                els.sizeName.textContent = cur.size;
+                [...els.sizes.children].forEach(b => b.classList.toggle('active', b.dataset.size === cur.size));
+                updateBuy();
+            }
+
+            function loadColor(colorId) {
+                const col = colorOf(cur.item, colorId);
+                cur.color = col;
+                cur.imgs = (col.images && col.images.length) ? col.images : [cur.item.thumbnail].filter(Boolean);
+                cur.colorName = col.name;
+                els.colorName.textContent = col.name;
+                mSlides.innerHTML = cur.imgs.map(src => `<div class="slide"><img src="${esc(src)}" alt="${esc(cur.item.name)} — ${esc(col.name)}"></div>`).join('');
+                mDots.innerHTML = cur.imgs.map((_, k) => `<button aria-label="Go to image ${k + 1}" data-dot="${k}"></button>`).join('');
+                [...els.colors.children].forEach(s => s.classList.toggle('active', s.dataset.color === col.id));
+                setSlide(0, false);
+                // size availability depends on the chosen colour
+                renderSizes();
+                let s = cur.size;
+                if (!s || sizeOOS(col, s)) s = firstAvailableSize(cur.item, col);
+                selectSize(s);
+            }
+
+            function openModal(item) {
+                cur.item = item;
+                cur.size = '';
+                els.type.textContent = item.type || '';
+                els.title.textContent = item.name;
+                els.tagline.textContent = item.tagline || '';
+                els.desc.textContent = item.description || '';
+                els.price.innerHTML = `${esc(SYM)}${fmt(item.amount)}`;
+                els.colors.innerHTML = item.colors.map(c => `<button class="swatch" style="--sw:${esc(c.hex)}" data-color="${esc(c.id)}" title="${esc(c.name)}" aria-label="${esc(c.name)}"></button>`).join('');
+                loadColor(item.defaultColor || item.colors[0].id);   // renders sizes + selects + updates Buy
+                lastFocus = document.activeElement;
+                modal.classList.add('open');
+                modal.setAttribute('aria-hidden', 'false');
+                document.body.style.overflow = 'hidden';
+                // push a history entry so the browser Back button closes the modal instead of leaving the page
+                try { history.pushState({ h2nModal: true }, ''); modalPushed = true; } catch (_) { modalPushed = false; }
+                modal.querySelector('.modal-close').focus();
+            }
+            function hideModal() {
+                modal.classList.remove('open');
+                modal.setAttribute('aria-hidden', 'true');
+                document.body.style.overflow = '';
+                if (lastFocus) lastFocus.focus();
+            }
+            function closeModal() {
+                // UI-triggered close: unwind the pushed history entry (fires popstate → hideModal)
+                if (modalPushed) { modalPushed = false; history.back(); }
+                else hideModal();
+            }
+            window.addEventListener('popstate', () => {
+                if (modal.classList.contains('open')) { modalPushed = false; hideModal(); }
             });
-        });
+
+            grid.addEventListener('click', e => {
+                const heart = e.target.closest('[data-heart]');
+                if (heart) { e.stopPropagation(); const on = heart.classList.toggle('active'); heart.setAttribute('aria-pressed', on ? 'true' : 'false'); return; }
+                const card = e.target.closest('.card');
+                if (card) openModal(CFG.items[+card.dataset.idx]);
+            });
+            grid.addEventListener('keydown', e => {
+                if ((e.key === 'Enter' || e.key === ' ') && e.target.classList.contains('card')) { e.preventDefault(); openModal(CFG.items[+e.target.dataset.idx]); }
+            });
+
+            modal.addEventListener('click', e => { if (e.target.closest('[data-close]')) closeModal(); });
+            document.getElementById('mPrev').addEventListener('click', () => setSlide(cur.i - 1));
+            document.getElementById('mNext').addEventListener('click', () => setSlide(cur.i + 1));
+            mDots.addEventListener('click', e => { const b = e.target.closest('[data-dot]'); if (b) setSlide(+b.dataset.dot); });
+            els.colors.addEventListener('click', e => { const s = e.target.closest('[data-color]'); if (s) loadColor(s.dataset.color); });
+            els.sizes.addEventListener('click', e => { const b = e.target.closest('[data-size]'); if (b && !b.classList.contains('oos')) selectSize(b.dataset.size); });
+            els.buy.addEventListener('click', () => {
+                const it = cur.item;
+                if (!it || isGlobalOOS(it) || !cur.size || sizeOOS(cur.color, cur.size)) return;
+                const num = (CFG && CFG.whatsapp) ? String(CFG.whatsapp).replace(/[^0-9]/g, '') : '917010680219';
+                // Build emojis from code points (ASCII source) so no file/transfer encoding can corrupt them
+                const E = { wave: '\u{1F44B}', bag: '\u{1F6CD}\u{FE0F}', art: '\u{1F3A8}', ruler: '\u{1F4CF}', money: '\u{1F4B0}' };
+                const msg = [
+                    `Hello H2N Junior! ${E.wave}`, '',
+                    "I'd like to *Buy Now*:", '',
+                    `${E.bag} *${it.name}*` + (it.type ? ` (${it.type})` : ''),
+                    `${E.art} Colour: ${cur.colorName || '-'}`,
+                    `${E.ruler} Size: ${cur.size || '-'}`,
+                    `${E.money} Price: ${SYM}${fmt(it.amount)}`,
+                    '', 'Please confirm availability & delivery. Thank you!'
+                ].join('\n');
+                window.open(`https://wa.me/${num}?text=${encodeURIComponent(msg)}`, '_blank');
+            });
+            document.addEventListener('keydown', e => {
+                if (!modal.classList.contains('open')) return;
+                if (e.key === 'Escape') closeModal();
+                else if (e.key === 'ArrowLeft') setSlide(cur.i - 1);
+                else if (e.key === 'ArrowRight') setSlide(cur.i + 1);
+            });
+
+            let tx = null;
+            const slider = modal.querySelector('.slider');
+            slider.addEventListener('touchstart', e => { tx = e.touches[0].clientX; }, { passive: true });
+            slider.addEventListener('touchend', e => {
+                if (tx === null) return;
+                const dx = e.changedTouches[0].clientX - tx;
+                if (Math.abs(dx) > 40) setSlide(cur.i + (dx < 0 ? 1 : -1));
+                tx = null;
+            });
+
+            load().then(data => {
+                if (!data || !Array.isArray(data.items) || !data.items.length) {
+                    statusEl.textContent = 'Couldn’t load products. If you opened this file directly, serve the folder over http (e.g. “python -m http.server”) so new-arrivals.json can load.';
+                    return;
+                }
+                CFG = data; SYM = data.currencySymbol || '₹';
+                renderCards();
+            });
+        })();
+
+        /* Scroll-reveal for About Us blocks */
+        (function () {
+            const els = document.querySelectorAll('.js-reveal');
+            if (matchMedia('(prefers-reduced-motion: reduce)').matches || !('IntersectionObserver' in window)) {
+                els.forEach(el => el.classList.add('in')); return;
+            }
+            const io = new IntersectionObserver((entries) => {
+                entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+            }, { threshold: 0.15 });
+            els.forEach(el => io.observe(el));
+        })();
 
         /* Mobile menu toggle */
         (function () {
