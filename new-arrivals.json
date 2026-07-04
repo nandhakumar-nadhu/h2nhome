@@ -7,6 +7,36 @@
   "updated": "2026-07-04",
   "items": [
     {
+      "id": "ds",
+      "slug": "dragonfly-signature",
+      "name": "Dragonfly Signature",
+      "type": "Sets",
+      "tagline": "Tiny Wings. Big Dreams.",
+      "description": "The dragonfly represents transformation, confidence, and freedom. It symbolizes growth, joyful childhood, and the courage to explore. Our signature gold dragonfly adds a refined touch, making every outfit feel special and memorable.",
+      "amount": 799,
+      "outOfStock": false,
+      "sizes": [
+        "1-2 Y",
+        "2-3 Y",
+        "3-4 Y",
+        "4-5 Y",
+        "5-6 Y"
+      ],
+      "defaultColor": "rust-orange",
+      "colors": [
+        {
+          "id": "rust-orange",
+          "name": "Rust Orange",
+          "hex": "#a8330b",
+          "outOfStockSizes": [],
+          "images": [
+            "images/products/dragonfly-signature/rust-orange/rust-orange-1.png",
+            "images/products/dragonfly-signature/rust-orange/rust-orange-2.png"
+          ]
+        }
+      ]
+    },
+    {
       "id": "na-001",
       "slug": "heritage-festive-shirt-set",
       "name": "Heritage Festive Shirt Set",
@@ -15,7 +45,13 @@
       "description": "Festive shirt featuring elegant traditional gold shimmer print detailing, paired with a classic white veshti. Designed for comfort and style, making it the perfect outfit for festivals, weddings, birthdays, and special occasions.",
       "amount": 799,
       "outOfStock": false,
-      "sizes": ["1-2 Y", "2-3 Y", "3-4 Y", "4-5 Y", "5-6 Y"],
+      "sizes": [
+        "1-2 Y",
+        "2-3 Y",
+        "3-4 Y",
+        "4-5 Y",
+        "5-6 Y"
+      ],
       "defaultColor": "olive",
       "colors": [
         {
@@ -41,29 +77,6 @@
           ]
         }
       ]
-    },{
-      "id": "ds",
-      "slug": "dragonfly-signature",
-      "name": "Dragonfly Signature",
-      "type": "Sets",
-      "tagline": "Tiny Wings. Big Dreams.",
-      "description": "The dragonfly represents transformation, confidence, and freedom. It symbolizes growth, joyful childhood, and the courage to explore. Our signature gold dragonfly adds a refined touch, making every outfit feel special and memorable.",
-      "amount": 799,
-      "outOfStock": false,
-      "sizes": ["1-2 Y", "2-3 Y", "3-4 Y", "4-5 Y", "5-6 Y"],
-      "defaultColor": "rust-orange",
-      "colors": [
-        {
-          "id": "rust-orange",
-          "name": "Rust Orange",
-          "hex": "#a8330b",
-          "outOfStockSizes": [],
-          "images": [
-            "images/products/dragonfly-signature/rust-orange/rust-orange-1.png",
-            "images/products/dragonfly-signature/rust-orange/rust-orange-2.png"
-          ]
-        }
-      ]
     },
     {
       "id": "na-002",
@@ -74,15 +87,24 @@
       "description": "A refreshing ombre shirt featuring vibrant shades of blue, white, and green inspired by ocean waves and summer skies. Crafted for comfort and style, this lightweight shirt is perfect for vacations, outings, birthdays and everyday adventures.",
       "amount": 599,
       "outOfStock": true,
-      "disabled":false,
-      "sizes": ["1-2 Y", "2-3 Y", "3-4 Y", "4-5 Y", "5-6 Y"],
+      "disabled": false,
+      "sizes": [
+        "1-2 Y",
+        "2-3 Y",
+        "3-4 Y",
+        "4-5 Y",
+        "5-6 Y"
+      ],
       "defaultColor": "aqua-mist",
       "colors": [
         {
           "id": "aqua-mist",
           "name": "Aqua Mist",
           "hex": "#7fb5d8",
-          "outOfStockSizes": ["1-2 Y", "2-3 Y"],
+          "outOfStockSizes": [
+            "1-2 Y",
+            "2-3 Y"
+          ],
           "images": [
             "images/products/na-002-coastal-ombre-shirt/aqua-mist-1.png",
             "images/products/na-002-coastal-ombre-shirt/aqua-mist-2.png",
@@ -93,7 +115,9 @@
           "id": "ocean-blue",
           "name": "Ocean Blue",
           "hex": "#2f6db0",
-          "outOfStockSizes": ["4-5 Y"],
+          "outOfStockSizes": [
+            "4-5 Y"
+          ],
           "images": [
             "images/products/na-002-coastal-ombre-shirt/ocean-blue-1.png",
             "images/products/na-002-coastal-ombre-shirt/ocean-blue-2.png",
