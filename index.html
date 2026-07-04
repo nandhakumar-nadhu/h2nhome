@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>H2n Clothing — Designed Better for Boys | From Heart to Needle</title>
+    <meta name="description" content="H2n Clothing — Premium boys wear crafted from heart to needle. Explore the Latest Launch: Heritage Festive Shirt Set & Coastal Ombre Shirt.">
+    <link rel="icon" href="images/pdf-logo.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Poppins:wght@300;400;500;600;700&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
+    <style>
+        /* ============================================================
+           H2n Clothing — single-page site (replicates PDF UI design)
+           Palette sampled directly from the source PDF.
+           ============================================================ */
+        :root {
+            --navy-900: #01102e;
+            --navy-800: #02204a;
+            --navy-700: #05356b;
+            --navy-600: #0a4d88;
+            --navy-glow: #0e5f9e;
+
+            --brand: #0e82c4;
+            --brand-bright: #22a3e6;
+            --card: #0a55a8;
+            --card-hi: #0f63bd;
+
+            --green: #43a55f;
+            --green-bright: #5fca77;
+            --teal: #2f9e8c;
+
+            --white: #ffffff;
+            --cream: #f4efe6;
+            --muted: #b7cbe6;
+            --muted-dim: #7f9bc0;
+
+            --pill: rgba(8, 30, 66, 0.72);
+            --pill-border: rgba(120, 170, 220, 0.22);
+
+            --font-display: 'Baloo 2', system-ui, sans-serif;
+            --font-body: 'Poppins', system-ui, sans-serif;
+            --font-script: 'Caveat', cursive;
+
+            --ease: cubic-bezier(0.22, 1, 0.36, 1);
+            --maxw: 1180px;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        html { scroll-behavior: auto; } /* custom JS easing handles anchor scrolls */
+
+        body {
+            font-family: var(--font-body);
+            color: var(--white);
+            background: var(--navy-800);
+            overflow-x: hidden;
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Fixed atmospheric background: deep navy with a top-centre glow */
+        .bg {
+            position: fixed;
+            inset: 0;
+            z-index: -2;
+            background:
+                radial-gradient(120% 80% at 50% -8%, var(--navy-glow) 0%, var(--navy-600) 22%, var(--navy-700) 45%, var(--navy-800) 68%, var(--navy-900) 100%);
+        }
+        /* Twinkling starfield */
+        .stars { position: fixed; inset: 0; z-index: -1; pointer-events: none; overflow: hidden; }
+        .star {
+            position: absolute;
+            width: 3px; height: 3px;
+            border-radius: 50%;
+            background: #cfe6ff;
+            opacity: 0.5;
+            animation: twinkle 4s var(--ease) infinite;
+        }
+        .star.sm { width: 2px; height: 2px; }
+        .star.lg { width: 4px; height: 4px; box-shadow: 0 0 6px 1px rgba(180,220,255,.7); }
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.15; transform: scale(0.8); }
+            50%      { opacity: 0.85; transform: scale(1.2); }
+        }
+
+        a { color: inherit; text-decoration: none; }
+        img { display: block; max-width: 100%; }
+
+        /* ===================== NAVIGATION ===================== */
+        .navbar {
+            position: fixed;
+            top: 18px; left: 0; right: 0;
+            z-index: 100;
+            display: flex;
+            justify-content: center;
+            padding: 0 20px;
+            opacity: 0;
+            transform: translateY(-24px);
+            animation: navDrop 0.9s var(--ease) 0.15s forwards;
+        }
+        @keyframes navDrop { to { opacity: 1; transform: translateY(0); } }
+
+        .nav-pill {
+            position: relative;
+            width: 100%;
+            max-width: var(--maxw);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 14px 10px 16px;
+            border-radius: 44px;
+            background: linear-gradient(90deg, var(--pill) 0%, var(--pill) 58%, rgba(20,70,90,.72) 78%, rgba(52,132,92,.78) 100%);
+            border: 1px solid var(--pill-border);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            box-shadow: 0 18px 50px -22px rgba(0,0,0,0.7), inset 0 1px 0 rgba(255,255,255,0.06);
+        }
+
+        /* Brand wordmark (left) */
+        .brand { display: flex; align-items: center; gap: 10px; padding-right: 6px; flex-shrink: 0; }
+        .brand-icon { width: 48px; height: auto; flex-shrink: 0; filter: drop-shadow(0 3px 8px rgba(0,0,0,.35)); }
+        .brand-wordmark { height: clamp(30px, 3.4vw, 40px); width: auto; flex-shrink: 0; display: block; filter: drop-shadow(0 1px 3px rgba(0,0,0,.35)); }
+        .brand-text { display: flex; flex-direction: column; line-height: 1; }
+        .brand-name { display: flex; align-items: baseline; gap: 5px; }
+        .brand-name .script { font-family: var(--font-script); font-size: 1.55rem; font-weight: 700; color: var(--white); }
+        .brand-name .word { font-family: var(--font-body); font-size: 0.86rem; font-weight: 600; letter-spacing: 2px; color: var(--green-bright); }
+        .brand-tag { font-size: 0.56rem; font-weight: 600; letter-spacing: 2.6px; color: var(--green-bright); margin-top: 3px; }
+
+        /* Menu */
+        .nav-menu {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: clamp(14px, 2.4vw, 34px);
+        }
+        .nav-logo-slot { width: 60px; flex-shrink: 0; }
+        .nav-link {
+            position: relative;
+            font-size: 0.82rem;
+            font-weight: 600;
+            letter-spacing: 1.4px;
+            color: var(--white);
+            white-space: nowrap;
+            padding: 6px 2px;
+            transition: color .25s;
+        }
+        /* Menu items are intentionally disabled for now.
+           TO ENABLE LATER: remove `is-disabled` from the <a> tags,
+           give each an href, and delete the `.nav-link.is-disabled` rule. */
+        .nav-link.is-disabled {
+            color: var(--muted-dim);
+            opacity: 0.72;
+            cursor: default;
+            pointer-events: none;
+        }
+        .nav-link:not(.is-disabled)::after {
+            content: ""; position: absolute; left: 0; bottom: 0;
+            width: 0; height: 2px; border-radius: 2px;
+            background: linear-gradient(90deg, var(--brand-bright), var(--green-bright));
+            transition: width .3s var(--ease);
+        }
+        .nav-link:not(.is-disabled):hover { color: var(--brand-bright); }
+        .nav-link:not(.is-disabled):hover::after { width: 100%; }
+
+        /* Thread + sewing-machine decoration (right) — the brand signature */
+        .thread { flex-shrink: 0; width: 250px; display: flex; align-items: center; justify-content: flex-end; }
+        .thread img {
+            width: 100%;
+            filter: drop-shadow(0 0 5px rgba(190,225,255,0.55));
+            /* "sews" itself in left-to-right on load */
+            clip-path: inset(0 100% 0 0);
+            animation: sew 2.1s var(--ease) 0.9s forwards;
+        }
+        @keyframes sew { to { clip-path: inset(0 0 0 0); } }
+
+        /* Floating centre logo that dips below the pill */
+        .center-logo {
+            position: absolute;
+            left: 0; right: 0; margin-inline: auto;   /* robust horizontal centering */
+            top: 50%;
+            width: 96px;
+            opacity: 0;
+            transform: translateY(-50%) scale(0.4);
+            animation: logoPop 0.9s var(--ease) 0.55s forwards;
+            z-index: 3;
+        }
+        .center-logo img { width: 100%; filter: drop-shadow(0 10px 24px rgba(0,0,0,0.55)); animation: bob 5s ease-in-out 1.6s infinite; }
+        @keyframes logoPop { to { opacity: 1; transform: translateY(8%) scale(1); } }
+        @keyframes bob { 0%,100% { transform: translateY(0) rotate(0deg); } 50% { transform: translateY(-7px) rotate(-1.5deg); } }
+
+        .hamburger { display: none; }
+
+        /* ===================== HERO ===================== */
+        .hero {
+            position: relative;
+            padding: 190px 20px 90px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        /* Entrance on the wrapper, perpetual float on the image — separate
+           elements so the two transforms never fight each other. */
+        .hero-boys-wrap {
+            width: min(460px, 82vw);
+            margin-bottom: -6px;
+            opacity: 0;
+            transform: translateY(46px) scale(0.96);
+            animation: rise 1.1s var(--ease) 0.7s forwards;
+        }
+        .hero-boys {
+            width: 100%;
+            filter: drop-shadow(0 30px 50px rgba(0,0,0,0.5));
+            animation: floatBoys 5.5s ease-in-out 1.9s infinite;
+            will-change: transform, filter;
+        }
+        @keyframes rise { to { opacity: 1; transform: translateY(0) scale(1); } }
+        @keyframes floatBoys {
+            0%, 100% { transform: translateY(0) rotate(0deg); filter: drop-shadow(0 30px 50px rgba(0,0,0,0.5)); }
+            50%      { transform: translateY(-16px) rotate(-1.2deg); filter: drop-shadow(0 46px 60px rgba(0,0,0,0.42)); }
+        }
+
+        .hero-title { font-family: var(--font-display); line-height: 0.95; margin-top: 6px; }
+        .hero-title .line {
+            display: block;
+            overflow: hidden;
+        }
+        .hero-title .line > span {
+            display: inline-block;
+            transform: translateY(110%);
+            animation: reveal 0.95s var(--ease) forwards;
+        }
+        .hero-title .line.one > span { animation-delay: 1.0s; }
+        .hero-title .line.two > span { animation-delay: 1.18s; }
+        @keyframes reveal { to { transform: translateY(0); } }
+
+        .line.one > span {
+            font-size: clamp(2.8rem, 8.5vw, 6rem);
+            font-weight: 800;
+            color: var(--white);
+            letter-spacing: -1px;
+        }
+        .line.two > span {
+            font-size: clamp(3rem, 9.5vw, 6.6rem);
+            font-weight: 800;
+            letter-spacing: -1px;
+            background: linear-gradient(96deg, var(--brand-bright) 8%, var(--teal) 55%, var(--green-bright) 100%);
+            -webkit-background-clip: text; background-clip: text;
+            -webkit-text-fill-color: transparent; color: transparent;
+            padding: 0 6px 8px;
+        }
+
+        /* ===================== COLLECTIONS ===================== */
+        .collections { padding: 40px 20px 40px; max-width: var(--maxw); margin: 0 auto; scroll-margin-top: 118px; }
+        .col-head { text-align: center; margin-bottom: 54px; }
+        .eyebrow {
+            font-size: 0.82rem; font-weight: 600; letter-spacing: 5px;
+            background: linear-gradient(90deg, var(--teal), var(--green-bright));
+            -webkit-background-clip: text; background-clip: text;
+            -webkit-text-fill-color: transparent; color: transparent;
+            margin-bottom: 10px;
+        }
+        .col-title {
+            font-family: var(--font-display);
+            font-weight: 800;
+            font-size: clamp(2.6rem, 7vw, 4.8rem);
+            letter-spacing: -1px;
+            line-height: 1;
+            display: inline-flex; align-items: center; gap: 12px;
+        }
+        .col-title .rocket { display: inline-block; animation: launch 3s ease-in-out infinite; }
+        @keyframes launch { 0%,100% { transform: translateY(0) rotate(0); } 50% { transform: translateY(-10px) rotate(6deg); } }
+        .col-sub { color: var(--muted); font-size: 1.02rem; max-width: 560px; margin: 16px auto 0; }
+
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 328px));
+            gap: 44px;
+            justify-content: center;
+        }
+
+        /* Product card */
+        .card {
+            position: relative;
+            border-radius: 26px;
+            overflow: hidden;
+            background: linear-gradient(180deg, var(--card-hi) 0%, var(--card) 62%, #093f80 100%);
+            box-shadow: 0 30px 60px -30px rgba(0,0,0,0.75), inset 0 1px 0 rgba(255,255,255,0.08);
+            transition: transform .5s var(--ease), box-shadow .5s var(--ease);
+            /* reveal state */
+            opacity: 0;
+            transform: translateY(40px);
+        }
+        .card.in { opacity: 1; transform: translateY(0); transition: transform .8s var(--ease), box-shadow .5s var(--ease), opacity .8s var(--ease); }
+        .card:hover { transform: translateY(-12px); box-shadow: 0 44px 80px -34px rgba(0,0,0,0.85), 0 0 0 1px rgba(95,202,119,0.25); }
+
+        .card-media {
+            position: relative;
+            aspect-ratio: 4 / 3.5;
+            overflow: hidden;
+            background: radial-gradient(120% 100% at 50% 30%, #1069c6 0%, #0b52a2 70%, #093f80 100%);
+        }
+        /* contain + padding = the whole garment is visible (zoomed out), not cropped */
+        .card-media img { width: 100%; height: 100%; object-fit: contain; padding: 14px; transition: transform .8s var(--ease); }
+        .card:hover .card-media img { transform: scale(1.04); }
+
+        .card-body { padding: 16px 18px 20px; }
+        .card-cat { font-size: 0.62rem; font-weight: 600; letter-spacing: 2.5px; color: rgba(207,225,250,0.75); }
+        .card-titlerow { display: flex; align-items: flex-start; justify-content: space-between; gap: 10px; margin-top: 4px; }
+        .card-title { font-family: var(--font-display); font-weight: 700; font-size: 1.28rem; line-height: 1.08; color: var(--white); }
+        .card-tag { color: #d7e6fb; font-size: 0.76rem; font-weight: 500; margin-top: 5px; }
+        .card-desc { color: rgba(215,230,251,0.8); font-size: 0.74rem; line-height: 1.55; margin-top: 11px; }
+
+        .card-foot { display: flex; align-items: center; justify-content: space-between; margin-top: 16px; }
+        .dots { display: flex; gap: 8px; }
+        .dot { width: 17px; height: 17px; border-radius: 50%; background: var(--dot); box-shadow: 0 0 0 1.5px rgba(255,255,255,0.55), 0 2px 5px rgba(0,0,0,0.35); }
+        .price { font-family: var(--font-display); font-weight: 700; font-size: 1.3rem; color: var(--white); }
+        .price .r { font-size: 0.95rem; opacity: 0.85; margin-right: 2px; }
+
+        /* Heart / wishlist */
+        .heart {
+            border: none; background: transparent; cursor: pointer;
+            color: rgba(255,255,255,0.85); flex-shrink: 0; padding: 2px;
+            transition: transform .25s var(--ease), color .25s;
+        }
+        .heart svg { width: 22px; height: 22px; display: block; }
+        .heart:hover { transform: scale(1.15); }
+        .heart.active { color: #ff5470; }
+        .heart.active svg { fill: #ff5470; }
+
+        /* ===================== FOOTER ===================== */
+        .footer { max-width: var(--maxw); margin: 40px auto 0; padding: 40px 20px 50px; text-align: center; }
+        .footer-thread { margin: 0 auto 22px; width: 180px; opacity: 0.5; }
+        .footer-brand { display: inline-flex; align-items: center; gap: 10px; margin-bottom: 12px; }
+        .footer-brand img:first-child { width: 38px; height: auto; }
+        .footer-wordmark { height: 30px; width: auto; }
+        .footer-brand .script { font-family: var(--font-script); font-size: 1.5rem; }
+        .footer-brand .word { font-weight: 600; letter-spacing: 2px; font-size: 0.85rem; }
+        .footer-tag { font-family: var(--font-script); font-size: 1.25rem; color: var(--green-bright); }
+        .footer-copy { color: var(--muted-dim); font-size: 0.78rem; margin-top: 14px; }
+
+        /* ===================== RESPONSIVE ===================== */
+        @media (max-width: 940px) {
+            .nav-menu, .thread { display: none; }
+            .nav-pill { justify-content: space-between; padding: 10px 14px; }
+            .center-logo { display: none; }
+            .brand-icon { width: 42px; height: auto; }
+            .hamburger {
+                display: flex; flex-direction: column; gap: 5px;
+                background: transparent; border: none; cursor: pointer; padding: 8px;
+            }
+            .hamburger span { width: 24px; height: 2px; background: var(--white); border-radius: 2px; transition: .3s; }
+            .mobile-menu {
+                position: fixed; top: 84px; left: 20px; right: 20px; z-index: 99;
+                background: var(--pill); border: 1px solid var(--pill-border);
+                border-radius: 20px; backdrop-filter: blur(14px);
+                padding: 10px; display: none; flex-direction: column;
+                box-shadow: 0 24px 60px -24px rgba(0,0,0,0.8);
+            }
+            .mobile-menu.open { display: flex; }
+            .mobile-menu a { padding: 13px 16px; font-weight: 600; letter-spacing: 1px; color: var(--muted-dim); border-radius: 12px; font-size: 0.9rem; }
+            .mobile-menu a.mm-active { color: var(--white); }
+            .mobile-menu a.mm-active:active { background: rgba(95,202,119,0.15); }
+            .hero { padding-top: 150px; }
+        }
+        @media (min-width: 941px) { .mobile-menu { display: none; } }
+
+        @media (max-width: 780px) {
+            .card-grid { grid-template-columns: minmax(0, 400px); gap: 40px; }
+        }
+
+        /* Accessibility */
+        :focus-visible { outline: 2px solid var(--green-bright); outline-offset: 3px; border-radius: 4px; }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.001ms !important;
+                animation-delay: 0s !important;
+                transition-duration: 0.001ms !important;
+            }
+            .navbar, .center-logo, .hero-boys-wrap, .card { opacity: 1 !important; transform: none !important; }
+            .hero-title .line > span { transform: none !important; }
+            .thread img { clip-path: none !important; }
+        }
+    </style>
+</head>
+<body>
+    <div class="bg"></div>
+    <div class="stars" id="stars" aria-hidden="true"></div>
+
+    <!-- ===================== NAV ===================== -->
+    <nav class="navbar" aria-label="Primary">
+        <div class="nav-pill">
+            <a class="brand" href="#top" aria-label="H2n Junior home">
+                <img class="brand-icon" src="images/pdf-logo-icon.png" alt="">
+                <img class="brand-wordmark" src="images/pdf-wordmark.png" alt="H2n Junior — From Heart to Needle">
+            </a>
+
+            <!-- NEW ARRIVALS is live (scrolls to Latest Launch). COLLECTIONS & CONTACT
+                 are hidden for now — un-comment them and ABOUT US's is-disabled to re-enable. -->
+            <div class="nav-menu">
+                <a class="nav-link" href="#collections">NEW ARRIVALS</a>
+                <!-- <a class="nav-link is-disabled" aria-disabled="true" title="Coming soon">COLLECTIONS</a> -->
+                <span class="nav-logo-slot" aria-hidden="true"></span>
+                <a class="nav-link is-disabled" aria-disabled="true" title="Coming soon">ABOUT US</a>
+                <!-- <a class="nav-link is-disabled" aria-disabled="true" title="Coming soon">CONTACT</a> -->
+            </div>
+
+            <!-- Signature: brand thread ending in a sewing machine (from the H2n Junior mark) -->
+            <div class="thread" aria-hidden="true">
+                <img src="images/pdf-thread.png" alt="">
+            </div>
+
+            <button class="hamburger" id="hamburger" aria-label="Menu" aria-expanded="false">
+                <span></span><span></span><span></span>
+            </button>
+
+            <!-- Floating centre logo -->
+            <div class="center-logo" aria-hidden="true">
+                <img src="images/pdf-logo.png" alt="">
+            </div>
+        </div>
+    </nav>
+
+    <div class="mobile-menu" id="mobileMenu">
+        <a href="#collections" class="mm-active">NEW ARRIVALS</a>
+        <a aria-disabled="true">ABOUT US</a>
+    </div>
+
+    <!-- ===================== HERO ===================== -->
+    <header class="hero" id="top">
+        <div class="hero-boys-wrap">
+            <img class="hero-boys" src="images/pdf-hero-boys.png" alt="Boys wearing H2n Coastal Ombre shirts">
+        </div>
+        <h1 class="hero-title">
+            <span class="line one"><span>Designed Better</span></span>
+            <span class="line two"><span>for Boys</span></span>
+        </h1>
+    </header>
+
+    <!-- ===================== COLLECTIONS ===================== -->
+    <main class="collections" id="collections">
+        <div class="col-head">
+            <p class="eyebrow">COLLECTIONS</p>
+            <h2 class="col-title">Latest Launch <span class="rocket">🚀</span></h2>
+            <p class="col-sub">Handpicked pieces your boys will love. Super fabrics and styles that stand out!</p>
+        </div>
+
+        <section class="card-grid" aria-label="Latest launch products">
+
+            <!-- Card 1 -->
+            <article class="card reveal">
+                <div class="card-media">
+                    <img src="images/pdf-heritage-festive-set.jpg" alt="Heritage Festive Shirt Set — navy shirt with white veshti" loading="lazy">
+                </div>
+                <div class="card-body">
+                    <span class="card-cat">SETS</span>
+                    <div class="card-titlerow">
+                        <div>
+                            <h3 class="card-title">Heritage Festive Shirt Set</h3>
+                            <p class="card-tag">Tradition Woven with Style.</p>
+                        </div>
+                        <button class="heart" aria-label="Add Heritage Festive Shirt Set to wishlist" aria-pressed="false">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg>
+                        </button>
+                    </div>
+                    <p class="card-desc">Festive shirt featuring elegant traditional gold shimmer print detailing, paired with a classic white veshti. Designed for comfort and style, making it the perfect outfit for festivals, weddings, birthdays, and special occasions.</p>
+                    <div class="card-foot">
+                        <div class="dots">
+                            <span class="dot" style="--dot:#f4efe6" title="White"></span>
+                            <span class="dot" style="--dot:#8a8f5a" title="Olive"></span>
+                            <span class="dot" style="--dot:#c0392b" title="Red"></span>
+                        </div>
+                        <span class="price"><span class="r">₹</span>799</span>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Card 2 -->
+            <article class="card reveal">
+                <div class="card-media">
+                    <img src="images/pdf-coastal-ombre-shirt.png" alt="Coastal Ombre Shirt — blue, white and green ombre" loading="lazy">
+                </div>
+                <div class="card-body">
+                    <span class="card-cat">TOP</span>
+                    <div class="card-titlerow">
+                        <div>
+                            <h3 class="card-title">Coastal Ombre Shirt</h3>
+                            <p class="card-tag">Colors Inspired by Nature. Made for Every Adventure.</p>
+                        </div>
+                        <button class="heart" aria-label="Add Coastal Ombre Shirt to wishlist" aria-pressed="false">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg>
+                        </button>
+                    </div>
+                    <p class="card-desc">A refreshing ombre shirt featuring vibrant shades of blue, white, and green inspired by ocean waves and summer skies. Crafted for comfort and style, this lightweight shirt is perfect for vacations, outings, birthdays and everyday adventures.</p>
+                    <div class="card-foot">
+                        <div class="dots">
+                            <span class="dot" style="--dot:#e9e2cf" title="Sand"></span>
+                            <span class="dot" style="--dot:#d9b38c" title="Tan"></span>
+                            <span class="dot" style="--dot:#cdbf8f" title="Khaki"></span>
+                        </div>
+                        <span class="price"><span class="r">₹</span>599</span>
+                    </div>
+                </div>
+            </article>
+
+        </section>
+    </main>
+
+    <!-- ===================== FOOTER ===================== -->
+    <footer class="footer">
+        <svg class="footer-thread" viewBox="0 0 200 20" fill="none" aria-hidden="true">
+            <path d="M0 10 Q25 2, 50 10 T100 10 T150 10 T200 10" stroke="#5fca77" stroke-width="1.4" stroke-dasharray="0.1 6" stroke-linecap="round"/>
+        </svg>
+        <div class="footer-brand">
+            <img src="images/pdf-logo-icon.png" alt="">
+            <img class="footer-wordmark" src="images/pdf-wordmark.png" alt="H2n Junior">
+        </div>
+        <p class="footer-tag">From Heart to Needle</p>
+        <p class="footer-copy">© 2026 H2n Clothing. Designed Better for Boys.</p>
+    </footer>
+
+    <script>
+        /* Starfield — deterministic spread, gentle twinkle */
+        (function () {
+            const wrap = document.getElementById('stars');
+            const N = 46;
+            const sizes = ['sm', '', 'lg'];
+            let html = '';
+            for (let i = 0; i < N; i++) {
+                const x = (i * 61.8) % 100;                 // golden-ratio spread, avoids Math.random
+                const y = (i * 37.5 + (i % 7) * 6) % 100;
+                const s = sizes[i % 3];
+                const delay = (i % 9) * 0.45;
+                const dur = 3 + (i % 5);
+                html += `<span class="star ${s}" style="left:${x}%;top:${y}%;animation-delay:${delay}s;animation-duration:${dur}s"></span>`;
+            }
+            wrap.innerHTML = html;
+        })();
+
+        /* Scroll-reveal for product cards */
+        (function () {
+            const cards = document.querySelectorAll('.card.reveal');
+            if (!('IntersectionObserver' in window)) {
+                cards.forEach(c => c.classList.add('in'));
+                return;
+            }
+            const io = new IntersectionObserver((entries) => {
+                entries.forEach((e, i) => {
+                    if (e.isIntersecting) {
+                        const el = e.target;
+                        setTimeout(() => el.classList.add('in'), Array.from(cards).indexOf(el) * 140);
+                        io.unobserve(el);
+                    }
+                });
+            }, { threshold: 0.2 });
+            cards.forEach(c => io.observe(c));
+        })();
+
+        /* Animated (eased) smooth-scroll for in-page anchors, e.g. New Arrivals */
+        (function () {
+            const NAV_OFFSET = 112;
+            const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+            const easeInOutCubic = t => t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+
+            function scrollToY(targetY, duration) {
+                const startY = window.pageYOffset;
+                const dist = targetY - startY;
+                let startTs = null;
+                function step(ts) {
+                    if (startTs === null) startTs = ts;
+                    const p = Math.min((ts - startTs) / duration, 1);
+                    window.scrollTo(0, startY + dist * easeInOutCubic(p));
+                    if (p < 1) requestAnimationFrame(step);
+                }
+                requestAnimationFrame(step);
+            }
+
+            document.querySelectorAll('a[href^="#"]').forEach(a => {
+                a.addEventListener('click', e => {
+                    const id = a.getAttribute('href');
+                    if (id.length < 2) return;
+                    const el = document.querySelector(id);
+                    if (!el) return;
+                    e.preventDefault();
+                    const y = el.getBoundingClientRect().top + window.pageYOffset - NAV_OFFSET;
+                    if (reduce) { window.scrollTo(0, y); }
+                    else { scrollToY(y, 1000); }
+                    history.replaceState(null, '', id);
+                });
+            });
+        })();
+
+        /* Wishlist heart toggle */
+        document.querySelectorAll('.heart').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const on = btn.classList.toggle('active');
+                btn.setAttribute('aria-pressed', on ? 'true' : 'false');
+            });
+        });
+
+        /* Mobile menu toggle */
+        (function () {
+            const burger = document.getElementById('hamburger');
+            const menu = document.getElementById('mobileMenu');
+            if (!burger) return;
+            burger.addEventListener('click', () => {
+                const open = menu.classList.toggle('open');
+                burger.setAttribute('aria-expanded', open ? 'true' : 'false');
+            });
+            menu.querySelectorAll('a[href]').forEach(a => a.addEventListener('click', () => {
+                menu.classList.remove('open');
+                burger.setAttribute('aria-expanded', 'false');
+            }));
+        })();
+    </script>
+</body>
+</html>
