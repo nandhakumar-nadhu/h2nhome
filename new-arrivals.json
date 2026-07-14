@@ -87,7 +87,8 @@
       "tagline": "Colors Inspired by Nature. Made for Every Adventure.",
       "description": "A refreshing ombre shirt featuring vibrant shades of blue, white, and green inspired by ocean waves and summer skies. Crafted for comfort and style, this lightweight shirt is perfect for vacations, outings, birthdays and everyday adventures.",
       "amount": 599,
-      "outOfStock": true,
+      "commingSoon": true,
+      "outOfStock": false,
       "disabled": false,
       "sizes": [
         "1-2 Y",
